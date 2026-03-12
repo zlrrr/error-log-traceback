@@ -1,0 +1,355 @@
+9:C 12 Mar 2026 14:51:18.702 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+9:C 12 Mar 2026 14:51:18.702 # Redis version=6.2.16, bits=64, commit=932a810a, modified=0, pid=9, just started
+9:C 12 Mar 2026 14:51:18.703 # Configuration loaded
+9:S 12 Mar 2026 14:51:18.703 * monotonic clock: POSIX clock_gettime
+9:S 12 Mar 2026 14:51:18.704 * Running mode=standalone, port=6379.
+9:S 12 Mar 2026 14:51:18.704 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+9:S 12 Mar 2026 14:51:18.704 # Server initialized
+9:S 12 Mar 2026 14:51:18.706 * <bf> RedisBloom version 2.4.10 (Git=unknown)
+9:S 12 Mar 2026 14:51:18.706 * Module 'bf' loaded from /usr/local/bin/redisbloom.so
+9:S 12 Mar 2026 14:51:18.707 * DB loaded from append only file: 0.001 seconds
+9:S 12 Mar 2026 14:51:18.707 * Ready to accept connections
+9:S 12 Mar 2026 14:51:18.707 * Connecting to MASTER 127.0.0.1:6379
+9:S 12 Mar 2026 14:51:18.707 * MASTER <-> REPLICA sync started
+9:S 12 Mar 2026 14:51:18.708 * Non blocking connect for SYNC fired the event.
+9:S 12 Mar 2026 14:51:18.708 * Master replied to PING, replication can continue...
+9:S 12 Mar 2026 14:51:18.708 * Partial resynchronization not possible (no cached master)
+9:S 12 Mar 2026 14:51:18.708 * Master is currently unable to PSYNC but should be in the future: -NOMASTERLINK Can't SYNC while not connected with my master
+9:M 12 Mar 2026 14:51:18.716 # Setting secondary replication ID to 303ccbc53f2d0a3f018254cc1895a42d0f485362, valid up to offset: 1. New replication ID is 0be4cf359ebef9d1423825f5a97185663a9edd78
+9:M 12 Mar 2026 14:51:18.716 # MASTER MODE enabled from request from 'id=4 addr=10.244.4.1:45506 laddr=10.244.4.3:6379 fd=9 name= age=0 idle=0 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=34 qbuf-free=40920 argv-mem=12 obl=0 oll=0 omem=0 tot-mem=61476 events=r cmd=slaveof user=paas-2022119 redir=-1'
+
+
+=== REDIS BUG REPORT START: Cut & paste starting from here ===
+9:M 12 Mar 2026 16:35:18.675 # Redis 6.2.16 crashed by signal: 11, si_code: 1
+9:M 12 Mar 2026 16:35:18.675 # Accessing address: 0x7fd60a745b98
+9:M 12 Mar 2026 16:35:18.675 # Crashed running the instruction at: 0x7fd2897e6643
+
+------ STACK TRACE ------
+EIP:
+/usr/local/bin/redisbloom.so(CMS_Query+0x53)[0x7fd2897e6643]
+
+Backtrace:
+/lib64/libpthread.so.0(+0x12b20)[0x7fd288181b20]
+/usr/local/bin/redisbloom.so(CMS_Query+0x53)[0x7fd2897e6643]
+/usr/local/bin/redisbloom.so(CMSketch_Query+0x0d8)[0x7fd2897e57a8]
+redis-server *:6379(RedisModuleCommandDispatcher+0x4e)[0x4c2e5e]
+redis-server *:6379(call+0x0d5)[0x43bf15]
+redis-server *:6379(processCommand+0x57d)[0x43ce2d]
+redis-server *:6379(processInputBuffer+0xf3)[0x450af3]
+redis-server *:6379[0x4e31c8]
+redis-server *:6379(aeProcessEvents+0x292)[0x434e12]
+redis-server *:6379(aeMail+0x1d)[0x43507d]
+redis-server *:6379(main+0x316)[0x4312b6]
+redis-server *:6379(aeMain+0x1d)[0x43507d]
+redis-server *:6379(main+0x316)[0x4312b6]
+/lib64/libc.so.6(__libc_start_main+0xf3)[0x7fd287dcf7b3]
+redis-server *:6379(_start+0x2e)[0x43179e]
+
+------ REGISTERS ------
+9:M 12 Mar 2026 16:35:18.682 #
+RAX:00007fd285f31380 RBX:0000000000000007
+RCX:0000000000000000 RDX:00000000e1205206
+RDI:00007fd285f83237 RSI:0000000000000003
+RBP:00007fd285f83233 RSP:00007fff8a507d10
+R8 :0000000000000000 R9 :0000000000000000
+R10:00007fd2897f2958 R11:00007fd287f39280
+R12:0000000000000000 R13:00007fd285e56520
+R14:ffffffffffffffff R15:00007fd285e56520
+RIP:00007fd2897e6643 EFL:0000000000010206
+CSGSFS:002b000000000033
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d1f) -> 00007fd285f50a00
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d1e) -> 00064ccfa1e9ff96
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d1d) -> 00007fd285e29cb0
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d1c) -> 00007fd285f50a00
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d1b) -> 000000000000000f
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d1a) -> 00007fd2860009c0
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d19) -> 0000000000000007
+9:M 12 Mar 2026 16:35:18.682 # (00007fff8a507d18) -> 00007fd285e56520
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d17) -> 00007fd285f133a8
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d16) -> 000000000000002c
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d15) -> 00007fd2897e57a0
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d14) -> 00007fd285f133a8
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d13) -> 00007fff8a507d58
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d12) -> 00007fd2897f1a58
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d11) -> 00007fff8a507da0
+9:M 12 Mar 2026 16:35:18.683 # (00007fff8a507d10) -> 00000000004be7c0
+
+------ INFO OUTPUT ------
+# Server
+redis_version:6.2.16
+redis_git_sha1:932a810a
+redis_git_dirty:0
+redis_build_id:bff438baf3b81001
+redis_mode:standalone
+os:Linux 4.18.0-372.19.1.30.po1.x86_64 x86_64
+arch_bits:64
+monotonic_clock:POSIX clock_gettime
+multiplexing_api:epoll
+atomicvar_api:c11-builtin
+gcc_version:11.2.1
+process_id:9
+process_supervised:no
+run_id:0063b7e664e4d7ccb364561787518ce012b281bc
+tcp_port:6379
+server_time_usec:1773304518672278
+uptime_in_seconds:6240
+uptime_in_days:0
+hz:10
+configured_hz:10
+lru_clock:11696838
+executable:/data/redis-server
+config_file:/data/redis.conf
+io_threads_active:0
+
+# Clients
+connected_clients:3
+cluster_connections:0
+maxclients:10000
+client_recent_max_input_buffer:32
+client_recent_max_output_buffer:0
+blocked_clients:0
+tracking_clients:0
+clients_in_timeout_table:0
+
+# Memory
+used_memory:991816
+used_memory_human:968.57K
+used_memory_rss:13250560
+used_memory_rss_human:12.64M
+used_memory_peak:1139584
+used_memory_peak_human:1.09M
+used_memory_peak_perc:87.03%
+used_memory_overhead:911744
+used_memory_startup:835016
+used_memory_dataset:80072
+used_memory_dataset_perc:51.07%
+allocator_allocated:1057528
+allocator_active:1433600
+allocator_resident:3670016
+total_system_memory:1054132224
+total_system_memory_human:1.73G
+used_memory_lua:30720
+used_memory_lua_human:30.00K
+used_memory_scripts:0
+used_memory_scripts_human:0B
+number_of_cached_scripts:0
+maxmemory:268435456
+maxmemory_human:256.00M
+maxmemory_policy:volatile-lru
+allocator_frag_ratio:1.36
+allocator_frag_bytes:376072
+allocator_rss_ratio:2.56
+allocator_rss_bytes:2236416
+rss_overhead_ratio:3.61
+rss_overhead_bytes:9500544
+mem_fragmentation_ratio:13.97
+mem_fragmentation_bytes:12301992
+mem_not_counted_for_evict:634
+mem_replication_backlog:0
+mem_clients_slaves:0
+mem_clients_normal:61512
+mem_aof_buffer:640
+mem_allocator:jemalloc-5.1.0
+active_defrag_running:0
+lazyfree_pending_objects:0
+lazyfreed_objects:0
+
+# Persistence
+loading:0
+current_cow_size:0
+current_cow_size_age:0
+current_fork_perc:0.00
+current_save_keys_processed:0
+current_save_keys_total:0
+rdb_changes_since_last_save:1165
+rdb_bgsave_in_progress:0
+rdb_last_save_time:1773298278
+rdb_last_bgsave_status:ok
+rdb_last_bgsave_time_sec:-1
+rdb_current_bgsave_time_sec:-1
+rdb_last_cow_size:0
+aof_enabled:1
+aof_rewrite_in_progress:0
+aof_rewrite_scheduled:0
+aof_last_rewrite_time_sec:-1
+aof_current_rewrite_time_sec:-1
+aof_last_bgrewrite_status:ok
+aof_last_write_status:ok
+aof_last_cow_size:0
+module_fork_in_progress:0
+module_fork_last_cow_size:0
+aof_current_size:54041
+aof_base_size:18002
+aof_pending_rewrite:0
+aof_buffer_length:0
+aof_rewrite_buffer_length:0
+aof_pending_bio_fsync:0
+aof_delayed_fsync:0
+
+# Stats
+total_connections_received:3191
+total_commands_processed:317060
+instantaneous_ops_per_sec:1
+total_net_input_bytes:14020584
+total_net_output_bytes:11354308
+instantaneous_input_kbps:0.11
+instantaneous_output_kbps:0.11
+rejected_connections:0
+sync_full:0
+sync_partial_ok:0
+sync_partial_err:0
+expired_keys:0
+expired_stale_perc:0.00
+expired_time_cap_reached_count:0
+expire_cycle_cpu_milliseconds:96
+evicted_keys:0
+keyspace_hits:294918
+keyspace_misses:1
+pubsub_channels:1
+pubsub_patterns:0
+latest_fork_usec:0
+total_forks:0
+migrate_cached_sockets:0
+slave_expires_tracked_keys:0
+active_defrag_hits:0
+active_defrag_misses:0
+active_defrag_key_hits:0
+active_defrag_key_misses:0
+tracking_total_keys:0
+tracking_total_items:0
+tracking_total_prefixes:0
+unexpected_error_replies:0
+total_error_replies:963
+dump_payload_sanitizations:0
+total_reads_processed:320896
+total_writes_processed:320768
+io_threaded_reads_processed:0
+io_threaded_writes_processed:0
+
+# Replication
+role:master
+connected_slaves:0
+master_failover_state:no-failover
+master_replid:0be4cf359ebef9d1423825f5a97185663a9edd78
+master_replid2:303ccbc53f2d0a3f018254cc1895a42d0f485362
+master_repl_offset:0
+second_repl_offset:1
+repl_backlog_active:0
+repl_backlog_size:67108864
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+
+# CPU
+used_cpu_sys:10.949448
+used_cpu_user:7.362249
+used_cpu_sys_children:0.000000
+used_cpu_user_children:0.000000
+used_cpu_sys_main_thread:10.606606
+used_cpu_user_main_thread:7.137999
+
+# Modules
+module:name=bf,ver=20410,api=1,filters=0,usedby=[],using=[],options=[]
+
+# Commandstats
+cmdstat_auth:calls=2256,usec=14480,usec_per_call=6.42,rejected_calls=0,failed_calls=0
+cmdstat_info:calls=8961,usec=217514,usec_per_call=24.27,rejected_calls=104,failed_calls=0
+cmdstat_psync:calls=1,usec=2,usec_per_call=2.00,rejected_calls=0,failed_calls=1
+cmdstat_latency:calls=208,usec=647,usec_per_call=3.11,rejected_calls=0,failed_calls=0
+cmdstat_slowlog:calls=416,usec=2115,usec_per_call=5.08,rejected_calls=0,failed_calls=0
+cmdstat_replconf:calls=3,usec=0,usec_per_call=0.00,rejected_calls=0,failed_calls=0
+cmdstat_ping:calls=6011,usec=10058,usec_per_call=1.67,rejected_calls=831,failed_calls=0
+cmdstat_cms.query:calls=294916,usec=1047032,usec_per_call=3.55,rejected_calls=0,failed_calls=1
+cmdstat_client:calls=232,usec=806,usec_per_call=3.47,rejected_calls=0,failed_calls=22
+cmdstat_cms.initbydim:calls=8,usec=1002,usec_per_call=125.25,rejected_calls=0,failed_calls=0
+cmdstat_slaveof:calls=1,usec=464,usec_per_call=464.00,rejected_calls=0,failed_calls=0
+cmdstat_command:calls=0,usec=0,usec_per_call=0.00,rejected_calls=2,failed_calls=0
+cmdstat_config:calls=208,usec=17106,usec_per_call=82.24,rejected_calls=0,failed_calls=0
+cmdstat_publish:calls=3062,usec=26193,usec_per_call=8.55,rejected_calls=0,failed_calls=0
+cmdstat_subscribe:calls=1,usec=3,usec_per_call=3.00,rejected_calls=0,failed_calls=0
+cmdstat_set:calls=768,usec=2051,usec_per_call=2.67,rejected_calls=0,failed_calls=0
+cmdstat_del:calls=8,usec=73,usec_per_call=9.12,rejected_calls=0,failed_calls=0
+
+# Errorstats
+errorstat_CMS_:count=1
+errorstat_ERR:count=24
+errorstat_NOAUTH:count=937
+errorstat_NOMASTERLINK:count=1
+
+# Cluster
+cluster_enabled:0
+
+# Keyspace
+db0:keys=262,expires=0,avg_ttl=0
+
+------ CLIENT LIST OUTPUT ------
+id=6 addr=10.244.4.2:42637 laddr=10.244.4.3:6379 fd=9 name=sentinel-686103d6-cmd age=6239 idle=0 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=1 qbuf-free=0 argv-mem=0 obl=0 oll=0 omem=0 tot-mem=20496 events=r cmd=ping user=paas-2022119 redir=-1
+id=7 addr=10.244.4.2:48025 laddr=10.244.4.3:6379 fd=10 name=sentinel-686103d6-pubsub age=6239 idle=1 flags=P db=0 sub=1 psub=0 multi=-1 qbuf=0 qbuf-free=0 argv-mem=0 obl=0 oll=0 omem=0 tot-mem=20504 events=r cmd=subscribe user=paas-2022119 redir=-1
+id=3187 addr=192.168.0.26:50622 laddr=10.244.4.3:6379 fd=11 name= age=10 idle=0 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=43 qbuf-free=40911 argv-mem=21 obl=4 oll=0 omem=0 tot-mem=61485 events=r cmd=cms.query user=ming redir=-1
+
+------ CURRENT CLIENT INFO ------
+id=3187 addr=192.168.0.26:50622 laddr=10.244.4.3:6379 fd=11 name= age=10 idle=0 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=43 qbuf-free=40911 argv-mem=21 obl=4 oll=0 omem=0 tot-mem=61485 events=r cmd=cms.query user=ming redir=-1
+argv[0]: 'cms.query'
+argv[1]: 'cms_0'
+argv[2]: 'xsaaxsa'
+9:M 12 Mar 2026 16:35:18.683 # key 'cms_0' found in DB containing the following object:
+9:M 12 Mar 2026 16:35:18.683 # Object type: 5
+9:M 12 Mar 2026 16:35:18.683 # Object encoding: 0
+9:M 12 Mar 2026 16:35:18.683 # Object refcount: 1
+
+------ MODULES INFO OUTPUT ------
+
+------ FAST MEMORY TEST ------
+9:M 12 Mar 2026 16:35:18.683 # Bio thread for job type #0 terminated
+9:M 12 Mar 2026 16:35:18.683 # Bio thread for job type #1 terminated
+9:M 12 Mar 2026 16:35:18.683 # Bio thread for job type #2 terminated
+*** Preparing to test memory region 5fd000 (2281472 bytes)
+*** Preparing to test memory region 2266000 (270336 bytes)
+*** Preparing to test memory region 7fd2839fd000 (8388608 bytes)
+*** Preparing to test memory region 7fd2841fe000 (8388608 bytes)
+*** Preparing to test memory region 7fd2849ff000 (8388608 bytes)
+*** Preparing to test memory region 7fd285200000 (8388608 bytes)
+*** Preparing to test memory region 7fd285a00000 (8388608 bytes)
+*** Preparing to test memory region 7fd2B6695e000 (8192 bytes)
+*** Preparing to test memory region 7fd2B6b67000 (4096 bytes)
+*** Preparing to test memory region 7fd206dba000 (4096 bytes)
+*** Preparing to test memory region 7fd286fd1000 (4096 bytes)
+*** Preparing to test memory region 7fd287761000 (4096 bytes)
+*** Preparing to test memory region 7fd287b04000 (4096 bytes)
+*** Preparing to test memory region 7fd287dab000 (4096 bytes)
+*** Preparing to test memory region 7fd28016b000 (16384 bytes)
+*** Preparing to test memory region 7fd28030b000 (16384 bytes)
+*** Preparing to test memory region 7fd288071000 (16384 bytes)
+*** Preparing to test memory region 7fd288b08000 (4096 bytes)
+*** Preparing to test memory region 7fd288e4d000 (4096 bytes)
+*** Preparing to test memory region 7fd2897f2000 (57344 bytes)
+*** Preparing to test memory region 7fd289806000 (4096 bytes)
+.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0
+Fast memory test PASSED, however your memory can still be broken. Please run a memory test for several hours if possible.
+
+------ DUMPING CODE AROUND EIP ------
+Symbol: CMS_Query (base: 0x7fd2897e65f0)
+Module: /usr/local/bin/redisbloom.so (base 0x7fd2897d1000)
+$ xxd -r -p /tmp/dump.hex /tmp/dump.bin
+$ objdump --adjust-vma=0x7fd2897e65f0 -D -b binary -m i386:x86-64 /tmp/dump.bin
+-------
+9:M 12 Mar 2026 16:35:18.910 # dump of function (hexdump of 211 bytes):
+4156415541545553 4885ff74664889f5 4885f6774531e448 032b7f0084d89fd2
+49de4889efe8e334 ffff498b4d0031d2 89c048f7f149b4d2 89c64014d2898a9c
+8d35844e0000488d 3db54e0000e85e2a ffff488d0dd74e00 00ba48000000048B
+35654e0000488d3d 364c0000e83f2aff ff66662e0f1f8400 000000000000f1f4
+0004156415554889 fb4885ff0100
+Function at 0x7fd2897d9b10 is MurmurHash2
+
+=== REDIS BUG REPORT END. Make sure to include from START to END. ===
+
+        Please report the crash by opening an issue on github:
+
+                http://github.com/redis/redis/issues
+
+  If a Redis module was involved, please open in the module's repo instead.
+
+  Suspect RAM error? Use redis-server --test-memory to verify it.
+
+  Some other issues could be detected by redis-server --check-system
+start check and fix files
+role is master, do nothing
